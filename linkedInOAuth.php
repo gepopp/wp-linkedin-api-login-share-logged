@@ -18,17 +18,33 @@
  * License:     GPL v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
+
 namespace linkedinoauth;
 
-use function A7\autoload;
+use LIOAUTH_Classes\Authorization;
 
-define('LIOATUH_VERSION', '1.2.11');
+define( 'LIOATUH_VERSION', '1.2.11' );
 define( 'LIOATUH_DIR', __DIR__ );
-define( 'LIOATUH_URL', plugin_dir_url(__FILE__) );
+define( 'LIOATUH_URL', plugin_dir_url( __FILE__ ) );
 
 $loader = require_once( LIOATUH_DIR . '/vendor/autoload.php' );
-$loader->addPsr4('LIOAUTH_Classes\\', __DIR__ . '/classes');
+$loader->addPsr4( 'LIOAUTH_Classes\\', __DIR__ . '/classes' );
 
 \A7\autoload( __DIR__ . '/src' );
 
-CreateAndUpdateTables();
+
+if ( ! defined( 'LINKEDIN_CLIENT_ID' ) || ! defined( 'LINKEDIN_CLIENT_SECRET' ) ) {
+
+	add_action( 'admin_notices', function () {
+		?>
+        <div class="notice notice-error is-dismissible">
+            <p><?php _e( 'To use the Linkedin OAuth Plugin define the API credentials in the wp-config.php file!', 'linkedinoauth' ); ?></p>
+        </div>
+		<?php
+	} );
+}else{
+	CreateAndUpdateTables();
+	new Authorization();
+}
+
+

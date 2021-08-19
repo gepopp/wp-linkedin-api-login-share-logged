@@ -1,5 +1,6 @@
 {
     "require": {
-        "a7/autoload": "^2.1"
+        "a7/autoload": "^2.1",
+        "nesbot/carbon": "^2.51"
     }
 }
