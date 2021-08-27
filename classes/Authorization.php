@@ -58,6 +58,8 @@ class Authorization {
 
 		if($this->action == 'login'){
 			(new Login($this->token, $this->redirect))->Login();
+		}elseif($this->action == 'register') {
+			(new Register($this->token, $this->redirect))->Rergister();
 		}else{
 			(new Share($this->token, $this->redirect, $this->post_id))->SharePost();
 		}
