@@ -25,7 +25,7 @@ class Login extends ApiActions {
 		if(in_array('declined', $this->user->roles)){
 			wp_logout();
 			$session = new FormSession();
-			$session->Add('errors', 'Ihr Account wurde deaktiviert, bitte wenden Sie sich an den Administratr under <a href="mailto:kontakt@top-leader.at" class="underline">kontakt@top-leader.at</a>.');
+			$session->Add('errors', 'Ihr Account wurde deaktiviert, bitte wenden Sie sich an den Administratr unter <a href="mailto:kontakt@top-leader.at" class="underline">kontakt@top-leader.at</a>.');
 			wp_safe_redirect(get_field('field_60f7e8aad0afa', 'option'));
 			exit;
 		}

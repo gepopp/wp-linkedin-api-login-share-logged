@@ -40,9 +40,7 @@ class Register extends ApiActions {
 			wp_set_auth_cookie( $user_id );
 			wp_safe_redirect( $this->redirect ? $this->redirect : get_field( 'field_5da3b06108b48', 'option' ) );
 			exit;
-
 		}
 
 	}
-
 }
