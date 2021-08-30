@@ -36,7 +36,7 @@ class Login extends ApiActions {
 		wp_set_current_user($this->user->ID);
 		wp_set_auth_cookie($this->user->ID);
 		do_action('wp_login', null, $this->user);
-		wp_safe_redirect($this->redirect ? $this->redirect : home_url());
+		wp_safe_redirect(home_url());
 		exit;
 
 	}
