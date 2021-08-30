@@ -4,6 +4,8 @@
 namespace LIOAUTH_Classes;
 
 
+use topleader\FormSession;
+
 class ApiActions {
 
 	protected Token $token;
@@ -32,18 +34,10 @@ class ApiActions {
 
 		if ( ! $user ) {
 
-			$names = explode(' ', $this->token->name);
-
-			$user = wp_insert_user( [
-				'user_login' => $this->token->name .'_'.time(),
-				'first_name' => $names[0],
-				'last_name'  => $names[1],
-				'user_email' => $this->token->email,
-				'user_pass'  => wp_unique_id(),
-			]);
-			if($user){
-				do_action('tl_activate_user', get_user_by('ID', $user));
-			}
+			$session = new FormSession();
+			$session->Add('errors', "Wir konnten keinen Account mit dieser E-Mail Adresse finden. Bitte registrieren Sie sich zuerst.");
+			wp_safe_redirect(get_field('field_60f7e3cf65354', 'option'));
+			exit;
 		}
 
 		$this->user = $user;
