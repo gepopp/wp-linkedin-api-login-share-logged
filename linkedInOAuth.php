@@ -21,6 +21,7 @@
 
 namespace linkedinoauth;
 
+use LIOAUTH_Classes\Boot;
 use LIOAUTH_Classes\Authorization;
 
 define( 'LIOATUH_VERSION', '1.2.11' );
@@ -32,19 +33,6 @@ $loader->addPsr4( 'LIOAUTH_Classes\\', __DIR__ . '/classes' );
 
 \A7\autoload( __DIR__ . '/src' );
 
-
-if ( ! defined( 'LINKEDIN_CLIENT_ID' ) || ! defined( 'LINKEDIN_CLIENT_SECRET' ) ) {
-
-	add_action( 'admin_notices', function () {
-		?>
-        <div class="notice notice-error is-dismissible">
-            <p><?php _e( 'To use the Linkedin OAuth Plugin define the API credentials in the wp-config.php file!', 'linkedinoauth' ); ?></p>
-        </div>
-		<?php
-	} );
-}else{
-	CreateAndUpdateTables();
-	new Authorization();
-}
+Boot::instantiate();
 
 
