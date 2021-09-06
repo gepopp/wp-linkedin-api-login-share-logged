@@ -32,7 +32,4 @@ class LinkedInAuthorizationUrl {
 		], Constants::LIOAUTH_API_URL );
 
 	}
-
-
-
 }

@@ -16,15 +16,14 @@ class SettingsPage {
 
 	public function LIOUTH_add_settings_page() {
 
-	    add_menu_page( 'LinkedIn Api Einstellungen',
-			'LinkedIn Einstellungen',
+	    add_menu_page( __('LinkedIn API Settings', 'linkedinoauth'),
+		    __('LinkedIn Settings', 'linkedinoauth'),
 			'administrator',
 			'lioauth_settings_page',
 			[ $this, 'LIOUTH_settings_page_content' ],
 			LIOATUH_URL . 'assets/images/icon.jpg'
 		);
-
-
+	    
 	}
 
 
@@ -32,10 +31,9 @@ class SettingsPage {
 
 		?>
         <div class="wrap">
-            <h2>LinkeIn API Einstellungen</h2>
+            <h2><?php _e('LinkedIn API Settings') ?></h2>
             <!-- Make a call to the WordPress function for rendering errors when settings are saved. -->
 			<?php settings_errors(); ?>
-
             <!-- Create the form that will be used to render our options -->
             <form method="post" action="options.php">
 				<?php settings_fields( 'LIOUTH_general_settings' ); ?>
@@ -58,7 +56,7 @@ class SettingsPage {
 
 		add_settings_section(
 			'LIOUTH_general_settings_section',         // ID used to identify this section and with which to register options
-			'API Client ID und API Secret',                  // Title to be displayed on the administration page
+			__('API Client ID and API Secret', 'linkedinoauth'),                  // Title to be displayed on the administration page
 			[ $this, 'LIOUTH_settings_section_content' ], // Callback used to render the description of the section
 			'lioauth_settings_page'                           // Page on which to add this section of options
 		);
@@ -92,8 +90,8 @@ class SettingsPage {
 				'type'  => 'password',
 				'name'  => 'client_secret',
 				'label' => '<p>Eine Anleitung wie sie die API-Zugangsdaten finden, finden Sie 
-<a href="https://www.linkedin.com/pulse/how-get-signin-linkedin-work-taric-andrade/" target="_blank">hier.</a></p>
-<p>Für Hilfe bei der Installation kontaktieren Sie uns <a href="https://poppgerhard.at" target="_blank">hier.</a> </p>',
+                            <a href="https://www.linkedin.com/pulse/how-get-signin-linkedin-work-taric-andrade/" target="_blank">hier.</a></p>
+                            <p>Für Hilfe bei der Installation kontaktieren Sie uns <a href="https://poppgerhard.at" target="_blank">hier.</a> </p>',
 			]
 		);
 
@@ -112,8 +110,8 @@ class SettingsPage {
 				'name' => 'redirect_url',
                 'placeholder' => 'linkedinoauth',
 				'label' => '<p>Per default werden Nutzer zu '. home_url('linkedinoauth') . ' weitergeleitet. 
-Wenn Sie zu einer anderen Url weiterleiten möchten geben Sie bitte hier nur den Pfad nach ' . home_url() . '/ ein.</p>
-<p>Diese URL muss in der <a href="https://developer.linkedin.com/" target="_blank">LinkedIn App</a> freigeschalten sein!</p>',
+                            Wenn Sie zu einer anderen Url weiterleiten möchten geben Sie bitte hier nur den Pfad nach ' . home_url() . '/ ein.</p>
+                            <p>Diese URL muss in der <a href="https://developer.linkedin.com/" target="_blank">LinkedIn App</a> freigeschalten sein!</p>',
 			]
 		);
 
@@ -123,9 +121,7 @@ Wenn Sie zu einer anderen Url weiterleiten möchten geben Sie bitte hier nur den
 		);
 	}
 
-	public function LIOUTH_settings_section_content() {
-		echo '<p>API Zugangsdaten können Sie entweder hier eingeben oder und das ist sicherer in der wp-config.php Datei die Konstanten "LINKEDIN_CLIENT_ID" und "LINKEDIN_CLIENT_SECRET" setzen.</p>';
-	} // end sandbox_general_options_callback
+	public function LIOUTH_settings_section_content() {} // end sandbox_general_options_callback
 
 
 	public function LIOAUTH_client_id_input( $args ) {
