@@ -7,6 +7,9 @@ namespace LIOAUTH_Classes\admin;
 class SettingsPage {
 
 
+	use Text;
+
+
 	public function __construct() {
 
 		add_action( 'admin_menu', [ $this, 'LIOUTH_add_settings_page' ] );
@@ -16,14 +19,15 @@ class SettingsPage {
 
 	public function LIOUTH_add_settings_page() {
 
-	    add_menu_page( __('LinkedIn API Settings', 'linkedinoauth'),
-		    __('LinkedIn Settings', 'linkedinoauth'),
+		add_menu_page(
+			$this->text( 'admin_page_heading' ),
+			$this->text( 'menu_entry' ),
 			'administrator',
 			'lioauth_settings_page',
 			[ $this, 'LIOUTH_settings_page_content' ],
 			LIOATUH_URL . 'assets/images/icon.jpg'
 		);
-	    
+
 	}
 
 
@@ -31,7 +35,7 @@ class SettingsPage {
 
 		?>
         <div class="wrap">
-            <h2><?php _e('LinkedIn API Settings') ?></h2>
+            <h2><?php echo $this->text( 'general_settings_heading' ) ?></h2>
             <!-- Make a call to the WordPress function for rendering errors when settings are saved. -->
 			<?php settings_errors(); ?>
             <!-- Create the form that will be used to render our options -->
@@ -56,7 +60,7 @@ class SettingsPage {
 
 		add_settings_section(
 			'LIOUTH_general_settings_section',         // ID used to identify this section and with which to register options
-			__('API Client ID and API Secret', 'linkedinoauth'),                  // Title to be displayed on the administration page
+			$this->text( 'api_keys_heading' ),                  // Title to be displayed on the administration page
 			[ $this, 'LIOUTH_settings_section_content' ], // Callback used to render the description of the section
 			'lioauth_settings_page'                           // Page on which to add this section of options
 		);
@@ -89,9 +93,7 @@ class SettingsPage {
 			[
 				'type'  => 'password',
 				'name'  => 'client_secret',
-				'label' => '<p>Eine Anleitung wie sie die API-Zugangsdaten finden, finden Sie 
-                            <a href="https://www.linkedin.com/pulse/how-get-signin-linkedin-work-taric-andrade/" target="_blank">hier.</a></p>
-                            <p>Für Hilfe bei der Installation kontaktieren Sie uns <a href="https://poppgerhard.at" target="_blank">hier.</a> </p>',
+				'label' => $this->text( 'api_keys_label' ),
 			]
 		);
 
@@ -106,12 +108,10 @@ class SettingsPage {
 			'lioauth_settings_page',    // The page on which this option will be displayed
 			'LIOUTH_general_settings_section',         // The name of the section to which this field belongs
 			[
-				'type' => 'text',
-				'name' => 'redirect_url',
-                'placeholder' => 'linkedinoauth',
-				'label' => '<p>Per default werden Nutzer zu '. home_url('linkedinoauth') . ' weitergeleitet. 
-                            Wenn Sie zu einer anderen Url weiterleiten möchten geben Sie bitte hier nur den Pfad nach ' . home_url() . '/ ein.</p>
-                            <p>Diese URL muss in der <a href="https://developer.linkedin.com/" target="_blank">LinkedIn App</a> freigeschalten sein!</p>',
+				'type'        => 'text',
+				'name'        => 'redirect_url',
+				'placeholder' => 'linkedinoauth',
+				'label'       => $this->text( 'redirect_url_label' ),
 			]
 		);
 
@@ -121,7 +121,8 @@ class SettingsPage {
 		);
 	}
 
-	public function LIOUTH_settings_section_content() {} // end sandbox_general_options_callback
+	public function LIOUTH_settings_section_content() {
+	} // end sandbox_general_options_callback
 
 
 	public function LIOAUTH_client_id_input( $args ) {
@@ -133,7 +134,7 @@ class SettingsPage {
                name="LIOUTH_general_settings[<?php echo $args['name'] ?>]"
                value="<?php echo $options[ $args['name'] ] ?? '' ?>"
                class="regular-text"
-               <?php echo isset($args['placeholder']) ? 'placeholder="' . $args['placeholder'] . '" ' : '' ?>
+			<?php echo isset( $args['placeholder'] ) ? 'placeholder="' . $args['placeholder'] . '" ' : '' ?>
         />
 		<?php
 		if ( isset( $args['label'] ) ) {

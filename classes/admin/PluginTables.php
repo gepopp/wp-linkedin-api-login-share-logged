@@ -6,15 +6,18 @@ namespace LIOAUTH_Classes\admin;
 
 class PluginTables {
 
-
+	const TOKENS_TABLE = 'linkedin_oauth_token';
+	const SHARES_TABLE = 'linkedin_shares';
 
 	public function __construct() {
 
-		register_activation_hook(LIOATUH_DIR, [$this, 'CreateAndUpdateTables']);
+
 
 	}
 
 	function CreateAndUpdateTables() {
+
+		wp_die('hier');
 
 		$installed_ver = get_option( "linkedinoauthversion" );
 
@@ -26,7 +29,7 @@ class PluginTables {
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-		$table_name = $wpdb->prefix . 'linkein_oauth_token';
+		$table_name = $wpdb->prefix . self::TOKENS_TABLE;
 
 		$charset_collate = $wpdb->get_charset_collate();
 
@@ -43,7 +46,7 @@ class PluginTables {
 
 		dbDelta( $sql );
 
-		$table_name = $wpdb->prefix . 'linkein_shares';
+		$table_name = $wpdb->prefix . self::SHARES_TABLE;
 
 		$sql = "CREATE TABLE $table_name (
 		id BIGINT NOT NULL AUTO_INCREMENT,
